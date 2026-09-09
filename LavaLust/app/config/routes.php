@@ -60,7 +60,7 @@ $router->get('/login', 'Auth::login');
 $router->post('/authenticate', 'Auth::authenticate');
 $router->get('/logout', 'Auth::logout');
 
-// Czyen's Pink Inventory Suite Routes (Customized Structure)
+// Czyen's Pink Inventory Routes
 $router->get('/products', 'Products::inventory');
 $router->get('/products/new', 'Products::add_item');
 $router->post('/products/save', 'Products::save_item');
