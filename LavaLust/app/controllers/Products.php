@@ -84,9 +84,9 @@ class Products extends Controller {
     }
 
     public function remove_item($id = NULL) {
-        if($id) {
-            $this->Product_model->delete_product($id);
-        }
-        redirect('products');
+    if ($id) {
+        $this->Product_model->delete_product($id);
     }
+    redirect('products');
+}
 }

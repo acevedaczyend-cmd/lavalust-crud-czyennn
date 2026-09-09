@@ -65,8 +65,10 @@ $router->get('/products', 'Products::inventory');
 $router->get('/products/new', 'Products::add_item');
 $router->post('/products/save', 'Products::save_item');
 
-// Dynamic Parameters (:any allows numbers or strings)
-$router->get('/products/modify/(:any)', 'Products::modify_item/$1');
-$router->post('/products/update/(:any)', 'Products::update_item/$1');
-$router->get('/products/remove/(:any)', 'Products::remove_item/$1');
-$router->get('/products/delete/(:any)', 'Products::remove_item/$1');
+// Dynamic routes with multiple parameter matchers (:any, (:num), and direct)
+$router->get('/products/modify/(.*)', 'Products::modify_item/$1');
+$router->post('/products/update/(.*)', 'Products::update_item/$1');
+
+// Multi-fallback Delete routes to prevent 404
+$router->get('/products/remove/(.*)', 'Products::remove_item/$1');
+$router->get('/products/delete/(.*)', 'Products::remove_item/$1');
