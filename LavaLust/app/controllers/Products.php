@@ -7,7 +7,6 @@ class Products extends Controller {
         parent::__construct();
         $this->call->library('session');
         
-        // Auth Guard Check
         if (! $this->session->userdata('logged_in')) {
             redirect('login');
         }
@@ -15,14 +14,12 @@ class Products extends Controller {
         $this->call->model('Product_model');
     }
 
-    /* --- INVENTORY DASHBOARD --- */
     public function inventory() {
         $viewData = [
             'pageTitle' => 'Czyen Pink Inventory Suite',
             'items'     => $this->Product_model->get_all_products()
         ];
         
-        // Dynamic view fallback check
         if (file_exists(APP_DIR . '/views/products/inventory_dashboard.php')) {
             $this->call->view('products/inventory_dashboard', $viewData);
         } else {
@@ -30,7 +27,6 @@ class Products extends Controller {
         }
     }
 
-    /* --- ADD ITEM VIEW --- */
     public function add_item() {
         $viewData = ['pageTitle' => 'Add New Item - Czyen Suite'];
         
@@ -41,7 +37,6 @@ class Products extends Controller {
         }
     }
 
-    /* --- SAVE NEW ITEM --- */
     public function save_item() {
         $payload = [
             'product_name' => $this->io->post('product_name') ?? $this->io->post('name') ?? '',
@@ -54,13 +49,17 @@ class Products extends Controller {
         redirect('products');
     }
 
-    /* --- MODIFY ITEM VIEW --- */
-    public function modify_item($id) {
-        $itemData = $this->Product_model->get_product_by_id($id);
+    public function modify_item($id = NULL) {
+        if(!$id) redirect('products');
         
+        $itemData = $this->Product_model->get_product_by_id($id);
+        $singleItem = is_array($itemData) && isset($itemData[0]) ? $itemData[0] : $itemData;
+        
+        // Ipinapasa pareho bilang $product at $item para walang mag-undefined variable error
         $viewData = [
             'pageTitle' => 'Modify Item Record',
-            'item'      => is_array($itemData) && isset($itemData[0]) ? $itemData[0] : $itemData
+            'product'   => $singleItem,
+            'item'      => $singleItem
         ];
 
         if (file_exists(APP_DIR . '/views/products/modify_item_form.php')) {
@@ -70,8 +69,9 @@ class Products extends Controller {
         }
     }
 
-    /* --- UPDATE ITEM --- */
-    public function update_item($id) {
+    public function update_item($id = NULL) {
+        if(!$id) redirect('products');
+
         $payload = [
             'product_name' => $this->io->post('product_name') ?? $this->io->post('name') ?? '',
             'description'  => $this->io->post('description') ?? '',
@@ -83,9 +83,10 @@ class Products extends Controller {
         redirect('products');
     }
 
-    /* --- REMOVE ITEM --- */
-    public function remove_item($id) {
-        $this->Product_model->delete_product($id);
+    public function remove_item($id = NULL) {
+        if($id) {
+            $this->Product_model->delete_product($id);
+        }
         redirect('products');
     }
 }
