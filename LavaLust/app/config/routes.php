@@ -53,17 +53,17 @@ $router->get('/users', 'UsersController::index');
 
 
 
-$router->get('/', 'Auth::login');
+$router->get('/', 'Products::inventory');
 
 // Auth Routes
 $router->get('/login', 'Auth::login');
 $router->post('/authenticate', 'Auth::authenticate');
 $router->get('/logout', 'Auth::logout');
 
-// Products CRUD Routes (Pink UI CRUD)
-$router->get('/products', 'Products::index');
-$router->get('/products/create', 'Products::create');
-$router->post('/products/store', 'Products::store');
-$router->get('/products/edit/{id}', 'Products::edit');
-$router->post('/products/update/{id}', 'Products::update');
-$router->get('/products/delete/{id}', 'Products::delete');
+// Czyen's Pink Inventory Suite Routes (Customized Structure)
+$router->get('/products', 'Products::inventory');
+$router->get('/products/new', 'Products::add_item');
+$router->post('/products/save', 'Products::save_item');
+$router->get('/products/modify/{id}', 'Products::modify_item');
+$router->post('/products/update/{id}', 'Products::update_item');
+$router->get('/products/remove/{id}', 'Products::remove_item');

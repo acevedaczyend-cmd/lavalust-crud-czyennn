@@ -5,61 +5,71 @@ class Products extends Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->call->library('session');
+        
+        // Auth Guard Check
+        if (! $this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+
         $this->call->model('Product_model');
     }
 
-    // Display Pink UI Products Table
+    /* --- DASHBOARD VIEW --- */
     public function index() {
-        $data['products'] = $this->Product_model->get_all_products();
-        $this->call->view('products/index', $data);
+        $viewData = [
+            'pageTitle' => 'Czyen Pink Inventory Suite',
+            'items'     => $this->Product_model->get_all_products()
+        ];
+        $this->call->view('products/inventory_dashboard', $viewData);
     }
 
-    // Show Create Form (Pink Theme)
-    public function create() {
-        $this->call->view('products/create');
+    /* --- ADD ITEM VIEW --- */
+    public function add_item() {
+        $viewData = ['pageTitle' => 'Add New Item - Czyen Suite'];
+        $this->call->view('products/add_item_form', $viewData);
     }
 
-    // Store Product to Aiven DB
-    public function store() {
-        $data = array(
-            'product_name' => $_POST['product_name'] ?? $_POST['name'] ?? '',
-            'description'  => $_POST['description'] ?? '',
-            'price'        => $_POST['price'] ?? 0,
-            'quantity'     => $_POST['quantity'] ?? 0
-        );
+    /* --- SAVE NEW ITEM --- */
+    public function save_item() {
+        $payload = [
+            'product_name' => $this->io->post('product_name') ?? $this->io->post('name') ?? '',
+            'description'  => $this->io->post('description') ?? '',
+            'price'        => $this->io->post('price') ?? 0,
+            'quantity'     => $this->io->post('quantity') ?? 0
+        ];
 
-        $this->Product_model->insert_product($data);
+        $this->Product_model->insert_product($payload);
         redirect('products');
     }
 
-    // Show Edit Form (Pink Theme)
-    public function edit($id) {
-        $product = $this->Product_model->get_product_by_id($id);
+    /* --- MODIFY ITEM VIEW --- */
+    public function modify_item($id) {
+        $itemData = $this->Product_model->get_product_by_id($id);
+        
+        $viewData = [
+            'pageTitle' => 'Modify Item Record',
+            'item'      => is_array($itemData) && isset($itemData[0]) ? $itemData[0] : $itemData
+        ];
 
-        if (is_array($product) && isset($product[0])) {
-            $data['product'] = $product[0];
-        } else {
-            $data['product'] = $product;
-        }
-
-        $this->call->view('products/edit', $data);
+        $this->call->view('products/modify_item_form', $viewData);
     }
 
-    // Update Product Info
-    public function update($id) {
-        $data = array(
-            'product_name' => $_POST['product_name'] ?? $_POST['name'] ?? '',
-            'description'  => $_POST['description'] ?? '',
-            'price'        => $_POST['price'] ?? 0,
-            'quantity'     => $_POST['quantity'] ?? 0
-        );
+    /* --- UPDATE ITEM --- */
+    public function update_item($id) {
+        $payload = [
+            'product_name' => $this->io->post('product_name') ?? $this->io->post('name') ?? '',
+            'description'  => $this->io->post('description') ?? '',
+            'price'        => $this->io->post('price') ?? 0,
+            'quantity'     => $this->io->post('quantity') ?? 0
+        ];
 
-        $this->Product_model->update_product($id, $data);
+        $this->Product_model->update_product($id, $payload);
         redirect('products');
     }
 
-    // Delete Product
-    public function delete($id) {
+    /* --- REMOVE ITEM --- */
+    public function remove_item($id) {
         $this->Product_model->delete_product($id);
         redirect('products');
     }
