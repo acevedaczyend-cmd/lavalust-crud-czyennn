@@ -25,10 +25,11 @@ class Products extends Controller {
 }
 
     /* --- ADD ITEM VIEW --- */
-    public function add_item() {
-        $viewData = ['pageTitle' => 'Add New Item - Czyen Suite'];
-        $this->call->view('products/add_item_form', $viewData);
-    }
+   public function add_item() {
+    $viewData = ['pageTitle' => 'Add New Item - Czyen Suite'];
+    // Palitan ang 'products/add_item_form' sa 'products/create'
+    $this->call->view('products/create', $viewData);
+}
 
     /* --- SAVE NEW ITEM --- */
     public function save_item() {
@@ -45,15 +46,16 @@ class Products extends Controller {
 
     /* --- MODIFY ITEM VIEW --- */
     public function modify_item($id) {
-        $itemData = $this->Product_model->get_product_by_id($id);
-        
-        $viewData = [
-            'pageTitle' => 'Modify Item Record',
-            'item'      => is_array($itemData) && isset($itemData[0]) ? $itemData[0] : $itemData
-        ];
+    $itemData = $this->Product_model->get_product_by_id($id);
+    
+    $viewData = [
+        'pageTitle' => 'Modify Item Record',
+        'item'      => is_array($itemData) && isset($itemData[0]) ? $itemData[0] : $itemData
+    ];
 
-        $this->call->view('products/modify_item_form', $viewData);
-    }
+    // Palitan ang 'products/modify_item_form' sa 'products/edit'
+    $this->call->view('products/edit', $viewData);
+}
 
     /* --- UPDATE ITEM --- */
     public function update_item($id) {
