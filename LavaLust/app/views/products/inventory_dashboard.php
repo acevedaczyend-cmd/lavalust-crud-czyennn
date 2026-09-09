@@ -1,6 +1,4 @@
-<?php
-
-/** @var string $pageTitle */ ?>
+<?php /** @var string $pageTitle */ ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,21 +29,21 @@
         <div class="pink-glass rounded-2xl p-6 mb-8 shadow-xl flex justify-between items-center">
             <div>
                 <h1 class="text-3xl font-extrabold text-pink-600 flex items-center gap-3">
-                    <i class="fa-solid fa-[#ff80ab] fa-gem text-pink-500"></i> CZYEN INVENTORY
+                    <i class="fa-solid fa-gem text-pink-500"></i> CZYEN INVENTORY
                 </h1>
                 <p class="text-sm text-pink-400 mt-1">Aesthetic Pink Management Suite</p>
             </div>
             <div class="flex items-center gap-3">
-                <a href="<?= site_url('products/new') ?>" class="bg-pink-500 ...">
+                <a href="<?= site_url('products/new') ?>" class="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-5 py-2.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">
                     <i class="fa-solid fa-plus mr-2"></i>New Item
                 </a>
-                <a href="<?= site_url('logout') ?>" class="bg-rose-100 ...">
+                <a href="<?= site_url('logout') ?>" class="bg-rose-100 hover:bg-rose-200 text-rose-600 font-semibold px-4 py-2.5 rounded-xl transition-all">
                     Logout
                 </a>
             </div>
         </div>
 
-        <!-- Inventory Grid Cards View instead of standard plain table -->
+        <!-- Inventory Grid Cards View -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <?php if (!empty($items)): foreach ($items as $row): ?>
                     <div class="pink-glass rounded-2xl p-6 shadow-md hover:shadow-xl transition-all flex flex-col justify-between">
@@ -66,7 +64,7 @@
                                 <a href="<?= site_url('products/modify/' . $row['id']) ?>" class="flex-1 text-center bg-white/80 hover:bg-pink-50 text-pink-600 font-medium py-2 rounded-lg border border-pink-200 text-sm transition">
                                     <i class="fa-solid fa-pen-to-square mr-1"></i> Edit
                                 </a>
-                                <a href="<?= site_url('products/remove' . $row['id']) ?>" onclick="return confirm('Delete this item?')" class="bg-rose-50 hover:bg-rose-100 text-rose-500 p-2 rounded-lg text-sm transition">
+                                <a href="<?= site_url('products/remove/' . $row['id']) ?>" onclick="return confirm('Delete this item?')" class="bg-rose-50 hover:bg-rose-100 text-rose-500 px-3 py-2 rounded-lg text-sm transition">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
                             </div>

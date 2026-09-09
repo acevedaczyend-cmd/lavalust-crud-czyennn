@@ -60,10 +60,13 @@ $router->get('/login', 'Auth::login');
 $router->post('/authenticate', 'Auth::authenticate');
 $router->get('/logout', 'Auth::logout');
 
-// Czyen's Pink Inventory Routes
+// Products Routes
 $router->get('/products', 'Products::inventory');
 $router->get('/products/new', 'Products::add_item');
 $router->post('/products/save', 'Products::save_item');
-$router->get('/products/modify/{id}', 'Products::modify_item');
-$router->post('/products/update/{id}', 'Products::update_item');
-$router->get('/products/remove/{id}', 'Products::remove_item');
+
+// Dynamic Parameters (:any allows numbers or strings)
+$router->get('/products/modify/(:any)', 'Products::modify_item/$1');
+$router->post('/products/update/(:any)', 'Products::update_item/$1');
+$router->get('/products/remove/(:any)', 'Products::remove_item/$1');
+$router->get('/products/delete/(:any)', 'Products::remove_item/$1');
