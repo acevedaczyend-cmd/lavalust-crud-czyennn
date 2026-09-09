@@ -16,13 +16,13 @@ class Products extends Controller {
     }
 
     /* --- DASHBOARD VIEW --- */
-    public function index() {
-        $viewData = [
-            'pageTitle' => 'Czyen Pink Inventory Suite',
-            'items'     => $this->Product_model->get_all_products()
-        ];
-        $this->call->view('products/inventory_dashboard', $viewData);
-    }
+  public function inventory() {
+    $viewData = [
+        'pageTitle' => 'Czyen Pink Inventory Suite',
+        'items'     => $this->Product_model->get_all_products()
+    ];
+    $this->call->view('products/inventory_dashboard', $viewData);
+}
 
     /* --- ADD ITEM VIEW --- */
     public function add_item() {
