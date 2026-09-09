@@ -44,11 +44,11 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 */
 /** @var object $router **/
 
-$router->get('/student', 'StudentController::index');
-$router->get('/student/login', 'StudentController::login');
-$router->get('/student/logout', 'StudentController::logout');
-$router->get('/student/profile', 'StudentController::profile')->middleware('StudentMiddleware');
-$router->get('/users', 'UsersController::index');
+//$router->get('/student', 'StudentController::index');
+//$router->get('/student/login', 'StudentController::login');
+//$router->get('/student/logout', 'StudentController::logout');
+//$router->get('/student/profile', 'StudentController::profile')->middleware('StudentMiddleware');
+//$router->get('/users', 'UsersController::index');
 
 
 
@@ -65,10 +65,8 @@ $router->get('/products', 'Products::inventory');
 $router->get('/products/new', 'Products::add_item');
 $router->post('/products/save', 'Products::save_item');
 
-// Dynamic routes with Regex wildcard ( (.*) matches IDs safely )
-$router->get('/products/modify/(.*)', 'Products::modify_item/$1');
-$router->post('/products/update/(.*)', 'Products::update_item/$1');
-
-// Delete action routes
-$router->get('/products/remove/(.*)', 'Products::remove_item/$1');
-$router->get('/products/delete/(.*)', 'Products::remove_item/$1');
+// Lavalust Route Matchers using (:any)
+$router->get('/products/modify/(:any)', 'Products::modify_item/$1');
+$router->post('/products/update/(:any)', 'Products::update_item/$1');
+$router->get('/products/remove/(:any)', 'Products::remove_item/$1');
+$router->get('/products/delete/(:any)', 'Products::remove_item/$1');
