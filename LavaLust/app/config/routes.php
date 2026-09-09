@@ -60,15 +60,15 @@ $router->get('/login', 'Auth::login');
 $router->post('/authenticate', 'Auth::authenticate');
 $router->get('/logout', 'Auth::logout');
 
-// Products Routes
+// Products CRUD Routes
 $router->get('/products', 'Products::inventory');
 $router->get('/products/new', 'Products::add_item');
 $router->post('/products/save', 'Products::save_item');
 
-// Dynamic routes with multiple parameter matchers (:any, (:num), and direct)
+// Dynamic routes with Regex wildcard ( (.*) matches IDs safely )
 $router->get('/products/modify/(.*)', 'Products::modify_item/$1');
 $router->post('/products/update/(.*)', 'Products::update_item/$1');
 
-// Multi-fallback Delete routes to prevent 404
+// Delete action routes
 $router->get('/products/remove/(.*)', 'Products::remove_item/$1');
 $router->get('/products/delete/(.*)', 'Products::remove_item/$1');
