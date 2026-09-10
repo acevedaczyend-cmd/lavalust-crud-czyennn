@@ -70,18 +70,19 @@ class Products extends Controller {
 }
 
     public function update_item($id = NULL) {
-        if(!$id) redirect('products');
+    $id = $id ?? $this->io->get('id');
+    if (!$id) redirect('products');
 
-        $payload = [
-            'product_name' => $this->io->post('product_name') ?? $this->io->post('name') ?? '',
-            'description'  => $this->io->post('description') ?? '',
-            'price'        => $this->io->post('price') ?? 0,
-            'quantity'     => $this->io->post('quantity') ?? 0
-        ];
+    $payload = [
+        'product_name' => $this->io->post('product_name') ?? $this->io->post('name') ?? '',
+        'description'  => $this->io->post('description') ?? '',
+        'price'        => $this->io->post('price') ?? 0,
+        'quantity'     => $this->io->post('quantity') ?? 0
+    ];
 
-        $this->Product_model->update_product($id, $payload);
-        redirect('products');
-    }
+    $this->Product_model->update_product($id, $payload);
+    redirect('products');
+}
 
     public function remove_item($id = NULL) {
     $id = $id ?? $this->io->get('id');
