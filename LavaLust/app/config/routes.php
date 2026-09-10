@@ -53,23 +53,25 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 
 $router->get('/', 'Products::inventory');
-
-// Auth Routes
 $router->get('/login', 'Auth::login');
 $router->post('/authenticate', 'Auth::authenticate');
 $router->get('/logout', 'Auth::logout');
 
-// Products CRUD Routes
+// Main Inventory Dashboard
 $router->get('/products', 'Products::inventory');
+
+// Add New Item Routes (Sinasaad pareho para ligtas)
 $router->get('/products/new', 'Products::add_item');
+$router->get('/products/add_item', 'Products::add_item');
 $router->post('/products/save', 'Products::save_item');
+$router->post('/products/save_item', 'Products::save_item');
 
 // Base routes para sa Query Parameters (?id=)
 $router->get('/products/modify_item', 'Products::modify_item');
 $router->post('/products/update_item', 'Products::update_item');
 $router->get('/products/remove_item', 'Products::remove_item');
 
-// Standard fallback routes (kung sakaling gamitin nang may segment parameter)
+// Standard URI segment matchers
 $router->get('/products/modify/(:any)', 'Products::modify_item/$1');
 $router->post('/products/update/(:any)', 'Products::update_item/$1');
 $router->get('/products/remove/(:any)', 'Products::remove_item/$1');

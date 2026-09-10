@@ -13,7 +13,7 @@
             <p class="text-xs text-pink-400 mt-1">Fill in the details below to add a new item</p>
         </div>
         
-        <form action="<?= site_url('products/store'); ?>" method="POST" class="space-y-4">
+        <form action="<?= site_url('products/save_item'); ?>" method="POST" class="space-y-4">
             <div>
                 <label class="block text-sm font-semibold text-pink-700 mb-1">Product Name</label>
                 <input type="text" name="product_name" required class="w-full bg-pink-50/50 border border-pink-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 rounded-xl p-2.5 text-gray-800 transition duration-200 outline-none">
