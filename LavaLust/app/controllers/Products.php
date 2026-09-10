@@ -50,24 +50,24 @@ class Products extends Controller {
     }
 
     public function modify_item($id = NULL) {
-        if(!$id) redirect('products');
-        
-        $itemData = $this->Product_model->get_product_by_id($id);
-        $singleItem = is_array($itemData) && isset($itemData[0]) ? $itemData[0] : $itemData;
-        
-        // Ipinapasa pareho bilang $product at $item para walang mag-undefined variable error
-        $viewData = [
-            'pageTitle' => 'Modify Item Record',
-            'product'   => $singleItem,
-            'item'      => $singleItem
-        ];
+    $id = $id ?? $this->io->get('id');
+    if (!$id) redirect('products');
+    
+    $itemData = $this->Product_model->get_product_by_id($id);
+    $singleItem = is_array($itemData) && isset($itemData[0]) ? $itemData[0] : $itemData;
+    
+    $viewData = [
+        'pageTitle' => 'Modify Item Record',
+        'product'   => $singleItem,
+        'item'      => $singleItem
+    ];
 
-        if (file_exists(APP_DIR . '/views/products/modify_item_form.php')) {
-            $this->call->view('products/modify_item_form', $viewData);
-        } else {
-            $this->call->view('products/edit', $viewData);
-        }
+    if (file_exists(APP_DIR . '/views/products/modify_item_form.php')) {
+        $this->call->view('products/modify_item_form', $viewData);
+    } else {
+        $this->call->view('products/edit', $viewData);
     }
+}
 
     public function update_item($id = NULL) {
         if(!$id) redirect('products');
@@ -84,6 +84,7 @@ class Products extends Controller {
     }
 
     public function remove_item($id = NULL) {
+    $id = $id ?? $this->io->get('id');
     if ($id) {
         $this->Product_model->delete_product($id);
     }

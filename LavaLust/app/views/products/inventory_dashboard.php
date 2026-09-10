@@ -61,10 +61,11 @@
                                 ₱<?= number_format($row['price'], 2) ?>
                             </div>
                             <div class="flex items-center gap-2 border-t border-pink-200/50 pt-4">
-                                <a href="<?= site_url('products/modify_item/' . $row['id']) ?>" class="flex-1 text-center bg-white/80 hover:bg-pink-50 text-pink-600 font-medium py-2 rounded-lg border border-pink-200 text-sm transition">
+                                <!-- Query Param URL ?id= -->
+                                <a href="<?= site_url('products/modify_item?id=' . $row['id']) ?>" class="flex-1 text-center bg-white/80 hover:bg-pink-50 text-pink-600 font-medium py-2 rounded-lg border border-pink-200 text-sm transition">
                                     <i class="fa-solid fa-pen-to-square mr-1"></i> Edit
                                 </a>
-                                <a href="<?= site_url('products/remove_item/' . $row['id']) ?>" onclick="return confirm('Delete this item?')" class="bg-rose-50 hover:bg-rose-100 text-rose-500 px-3 py-2 rounded-lg text-sm transition">
+                                <a href="<?= site_url('products/remove_item?id=' . $row['id']) ?>" onclick="return confirm('Delete this item?')" class="bg-rose-50 hover:bg-rose-100 text-rose-500 px-3 py-2 rounded-lg text-sm transition">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
                             </div>
