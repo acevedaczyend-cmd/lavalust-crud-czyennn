@@ -60,18 +60,26 @@ $router->get('/logout', 'Auth::logout');
 // Main Inventory Dashboard
 $router->get('/products', 'Products::inventory');
 
-// Add New Item Routes (Sinasaad pareho para ligtas)
+// Add Item Routes
 $router->get('/products/new', 'Products::add_item');
 $router->get('/products/add_item', 'Products::add_item');
 $router->post('/products/save', 'Products::save_item');
 $router->post('/products/save_item', 'Products::save_item');
 
-// Base routes para sa Query Parameters (?id=)
+// Edit & Update Routes (Query String + URI Segment Support)
 $router->get('/products/modify_item', 'Products::modify_item');
+$router->get('/products/edit', 'Products::modify_item');
 $router->post('/products/update_item', 'Products::update_item');
-$router->get('/products/remove_item', 'Products::remove_item');
+$router->post('/products/update', 'Products::update_item');
 
-// Standard URI segment matchers
+// Delete Routes
+$router->get('/products/remove_item', 'Products::remove_item');
+$router->get('/products/delete', 'Products::remove_item');
+
+// Fallback dynamic matchers
+$router->get('/products/modify_item/(:any)', 'Products::modify_item/$1');
 $router->get('/products/modify/(:any)', 'Products::modify_item/$1');
+$router->post('/products/update_item/(:any)', 'Products::update_item/$1');
 $router->post('/products/update/(:any)', 'Products::update_item/$1');
-$router->get('/products/remove/(:any)', 'Products::remove_item/$1');
+$router->get('/products/remove_item/(:any)', 'Products::remove_item/$1');
+$router->get('/products/delete/(:any)', 'Products::remove_item/$1');
