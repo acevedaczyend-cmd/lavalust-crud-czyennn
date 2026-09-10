@@ -34,7 +34,8 @@
                 <p class="text-sm text-pink-400 mt-1">Aesthetic Pink Management Suite</p>
             </div>
             <div class="flex items-center gap-3">
-                <a href="<?= site_url('products/new') ?>" class="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-5 py-2.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">
+                <!-- Direkta nang tinatwag ang add_item method -->
+                <a href="<?= site_url('products/add_item') ?>" class="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-5 py-2.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">
                     <i class="fa-solid fa-plus mr-2"></i>New Item
                 </a>
                 <a href="<?= site_url('logout') ?>" class="bg-rose-100 hover:bg-rose-200 text-rose-600 font-semibold px-4 py-2.5 rounded-xl transition-all">
