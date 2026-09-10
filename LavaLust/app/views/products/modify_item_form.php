@@ -15,7 +15,7 @@
             <p class="text-xs text-pink-400 mt-1">Update details for item #<?= $product['id']; ?></p>
         </div>
         
-        <form action="<?= site_url('products/update_item/' . $product['id']); ?>" method="POST" class="space-y-4">
+        <form action="<?= site_url('products/update_item?id=' . $product['id']); ?>" method="POST" class="space-y-4">
             <div>
                 <label class="block text-sm font-semibold text-pink-700 mb-1">Product Name</label>
                 <input type="text" name="product_name" value="<?= htmlspecialchars($product['product_name']); ?>" required class="w-full bg-pink-50/50 border border-pink-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 rounded-xl p-2.5 text-gray-800 transition duration-200 outline-none">
