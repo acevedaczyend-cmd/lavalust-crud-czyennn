@@ -1,21 +1,15 @@
-ARG PHP_VERSION=8.5
+FROM php:8.3-apache
 
-FROM php:${PHP_VERSION}-apache
+RUN docker-php-ext-install pdo pdo_mysql \
+    && a2enmod rewrite
 
-# Install PDO MySQL
-RUN docker-php-ext-install pdo pdo_mysql
+COPY LavaLust/ /var/www/lavalust/
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
+ENV APACHE_DOCUMENT_ROOT=/var/www/lavalust/public
 
-# Allow .htaccess overrides
-RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
-
-# Copy app files
-COPY LavaLust/ /var/www/html/
-
-# Fix permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+RUN sed -ri 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
+    && sed -ri 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf \
+    && chown -R www-data:www-data /var/www/lavalust \
+    && chmod -R 755 /var/www/lavalust
 
 EXPOSE 80

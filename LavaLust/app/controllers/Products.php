@@ -1,14 +1,14 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
-class Products extends Controller {
+class Products extends Controller { // handle inventory in system
 
     public function __construct() {
         parent::__construct();
         $this->call->library('session');
         
         if (! $this->session->userdata('logged_in')) {
-            redirect('login');
+            redirect('login'); // if hindi nakalogin
         }
 
         $this->call->model('Product_model');
@@ -16,7 +16,7 @@ class Products extends Controller {
 
     public function inventory() {
         $viewData = [
-            'pageTitle' => 'Czyen Pink Inventory Suite',
+            'pageTitle' => 'Czyen Inventory Suite',
             'items'     => $this->Product_model->get_all_products()
         ];
         
