@@ -186,20 +186,20 @@ class Database {
      */
     private $operators = array('=', '!=', '<', '>', '<=', '>=', '<>');
 
-    /** @var array Executed queries log */
-    private array $query_log = [];
+/** @var array Executed queries log */
+private $query_log = [];
 
-    /** @var bool Whether query logging is enabled */
-    private bool $query_logging = true;
+/** @var bool Whether query logging is enabled */
+private $query_logging = true;
 
-    /**
-     * Class Constructor
-     *
-     * @param string $dbname
-     */
-    public function __construct($dbname = NULL)
-    {
-        if(is_null($dbname)) {
+/**
+ * Class Constructor
+ *
+ * @param string $dbname
+ */
+public function __construct($dbname = NULL)
+{
+    if(is_null($dbname)) {
             $database_config = database_config()['main'];
         } else {
             if(isset(database_config()[$dbname])) {

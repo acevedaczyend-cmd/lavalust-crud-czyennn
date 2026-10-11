@@ -50,12 +50,13 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 //$router->get('/student/profile', 'StudentController::profile')->middleware('StudentMiddleware');
 //$router->get('/users', 'UsersController::index');
 
-
+// para malaman kuhng aling url ang tatawag sa function/controller
 
 $router->get('/', 'Products::inventory');
 $router->get('/login', 'Auth::login');
 $router->post('/authenticate', 'Auth::authenticate');
 $router->get('/logout', 'Auth::logout');
+$router->post('/api/login', 'ApiAuth::login');
 
 // Main Inventory Dashboard
 $router->get('/products', 'Products::inventory');
@@ -83,3 +84,17 @@ $router->post('/products/update_item/(:any)', 'Products::update_item/$1');
 $router->post('/products/update/(:any)', 'Products::update_item/$1');
 $router->get('/products/remove_item/(:any)', 'Products::remove_item/$1');
 $router->get('/products/delete/(:any)', 'Products::remove_item/$1');
+
+// Migration Routes
+$router->get('create-migration/{migration_class}',
+    'MigrationController::create_migration');
+$router->get('migrate', 'MigrationController::migrate');
+$router->get('rollback', 'MigrationController::rollback');
+$router->get('rollback-all', 'MigrationController::rollback_all');
+$router->get('refresh', 'MigrationController::refresh');
+$router->get('status', 'MigrationController::status');
+
+$router->get('/api/products', 'ApiProducts::index');
+$router->post('/api/products', 'ApiProducts::store');
+$router->put('/api/products/{id}', 'ApiProducts::update');
+$router->delete('/api/products/{id}', 'ApiProducts::delete');

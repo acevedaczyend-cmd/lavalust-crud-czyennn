@@ -1,0 +1,8 @@
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Session security data
+/runtime/session/session_security.json

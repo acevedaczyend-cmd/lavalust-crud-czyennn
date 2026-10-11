@@ -48,7 +48,9 @@ if (file_exists(ROOT_DIR . '.env')) {
         $line = trim($line);
 
         // Skip comments and lines without =
-        if ($line[0] === '#' || !str_contains($line, '=')) continue;
+        if ($line === '' || $line[0] === '#' || strpos($line, '=') === false) {
+            continue;
+        }
 
         [$key, $value] = explode('=', $line, 2);
         $key   = trim($key);
@@ -77,20 +79,20 @@ define('BASE_URL', config_item('base_url'));
  */
 if ($composer_autoload = config_item('composer_autoload'))
 {
-	if ($composer_autoload === TRUE)
-	{
-		file_exists(ROOT_DIR.'vendor/autoload.php')
-			? require_once(ROOT_DIR.'vendor/autoload.php')
-			: show_404('404 Not Found', 'Composer config file not found.');
-	}
-	elseif (file_exists($composer_autoload))
-	{
-		require_once($composer_autoload);
-	}
-	else
-	{
-		show_404('404 Not Found', 'Composer config file not found.');
-	}
+    if ($composer_autoload === TRUE)
+    {
+        file_exists(ROOT_DIR.'vendor/autoload.php')
+            ? require_once(ROOT_DIR.'vendor/autoload.php')
+            : show_404('404 Not Found', 'Composer config file not found.');
+    }
+    elseif (file_exists($composer_autoload))
+    {
+        require_once($composer_autoload);
+    }
+    else
+    {
+        show_404('404 Not Found', 'Composer config file not found.');
+    }
 }
 
 /**
@@ -111,23 +113,23 @@ define('IS_CLI', php_sapi_name() === 'cli');
  */
 switch (strtolower(config_item('environment')))
 {
-	case 'development':
-		_handlers();
-		error_reporting(-1);
-		ini_set('display_errors', 1);
-	break;
+    case 'development':
+        _handlers();
+        error_reporting(-1);
+        ini_set('display_errors', 1);
+    break;
 
-	case 'testing':
-	case 'production':		
-		ini_set('display_errors', 0);
-		error_reporting(0);
-		_handlers();
-	break;
+    case 'testing':
+    case 'production':
+        ini_set('display_errors', 0);
+        error_reporting(0);
+        _handlers();
+    break;
 
-	default :
-		_handlers();
-		error_reporting(-1);
-		ini_set('display_errors', 1);
+    default :
+        _handlers();
+        error_reporting(-1);
+        ini_set('display_errors', 1);
 }
 
 /**
@@ -137,9 +139,9 @@ switch (strtolower(config_item('environment')))
  */
 function _handlers()
 {
-	set_error_handler('_error_handler');
-	set_exception_handler('_exception_handler');
-	register_shutdown_function('_shutdown_handler');
+    set_error_handler('_error_handler');
+    set_exception_handler('_exception_handler');
+    register_shutdown_function('_shutdown_handler');
 }
 
 /**
@@ -181,7 +183,7 @@ $lang = load_class('lang', 'kernel');
  * Instantiate the Proxies classes
  */
 if(config_item('proxy_enabled')){
-	require_once SYSTEM_DIR . 'kernel/Proxies.php';
+    require_once SYSTEM_DIR . 'kernel/Proxies.php';
 }
 
 /**
@@ -215,25 +217,26 @@ if (is_dir(APP_DIR . 'kernel/')) {
  */
 function lava_instance()
 {
-  	return Controller::instance();
+    return Controller::instance();
 }
 $performance->stop('lavalust');
 
 if (php_sapi_name() === 'cli') {
     $raw_url = $argv[1] ?? '';
-    
+
     $raw_url = ltrim($raw_url, '/');
-    
+
+    $router = $router ?? load_class('router', 'kernel');
     $url = $router->sanitize_url($raw_url);
-    
+
     if (empty($url)) {
         $url = '/';
     } else {
         $url = '/' . $url;
     }
-    
+
     $method = 'GET';
-    
+
 } else {
     $url = $router->sanitize_url(str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['PHP_SELF']));
     $method = isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : 'GET';
